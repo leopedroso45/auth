@@ -6,10 +6,10 @@ import (
 	"net/http"
 )
 
-func Welcome(w http.ResponseWriter, r *http.Request){
+func Welcome(w http.ResponseWriter, r *http.Request) {
 	c, err := r.Cookie("token")
 	if err != nil {
-		if err == http.ErrNoCookie{
+		if err == http.ErrNoCookie {
 			w.WriteHeader(http.StatusUnauthorized)
 			return
 		}

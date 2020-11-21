@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func Refresh(w http.ResponseWriter, r *http.Request){
+func Refresh(w http.ResponseWriter, r *http.Request) {
 	// (BEGIN) The code uptil this point is the same as the first part of the `Welcome` route
 	c, err := r.Cookie("token")
 	if err != nil {

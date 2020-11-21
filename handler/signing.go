@@ -10,11 +10,11 @@ import (
 // Create the JWT Key used to create the signature
 var jwtKey = []byte("my_secret_key")
 
-
 var users = map[string]string{
-	"users1" : "password1",
-	"users2" : "password2",
+	"users1": "password1",
+	"users2": "password2",
 }
+
 // Create a struct to read the username and password from the request body
 type Credentials struct {
 	Password string `json:"password"`
@@ -29,7 +29,7 @@ type Claims struct {
 }
 
 // Signing handler
-func Signing(w http.ResponseWriter, r *http.Request){
+func Signing(w http.ResponseWriter, r *http.Request) {
 	var creds Credentials
 	// Get the JSON body and decode into credentials
 	err := json.NewDecoder(r.Body).Decode(&creds)
@@ -56,7 +56,7 @@ func Signing(w http.ResponseWriter, r *http.Request){
 
 	// Create the JWT Claims, which includes the username and expiry time
 	claims := &Claims{
-		Username:       creds.Username,
+		Username: creds.Username,
 		StandardClaims: jwt.StandardClaims{
 			// In JWT, the expiry time is expressed as unix milliseconds
 			ExpiresAt: expirationTime.Unix(),
@@ -76,8 +76,8 @@ func Signing(w http.ResponseWriter, r *http.Request){
 	// Finally, we set the client cookie for "token" as the JWT we just generated
 	// we also set an expiry time which is the same as the token itself
 	http.SetCookie(w, &http.Cookie{
-		Name: "token",
-		Value: tokenString,
+		Name:    "token",
+		Value:   tokenString,
 		Expires: expirationTime,
 	})
 

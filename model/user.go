@@ -1,52 +1,31 @@
 package model
 
 import (
-"errors"
-"github.com/badoux/checkmail"
+	database "auth/db"
+	"github.com/jinzhu/gorm"
+	"time"
 )
 
 type User struct {
-	ID    uint64 `gorm:"primary_key;auto_increment" json:"id"`
-	Email string `gorm:"size:255;not null;unique" json:"email"`
-	Password string `gorm:"size:255;" json:"password"`
-	Username string `gorm:"size:255;not null;unique" json:"username"`
+	gorm.Model
+
+	ID         uint      `gorm:"primary_key;auto_increment" json:"id,omitempty"`
+	Username   string    `gorm:"type:varchar(50);not null;unique"json:"username,omitempty"`
+	Email      string    `gorm:"size:50;not null;unique"json:"email,omitempty"`
+	Password   string    `gorm:"size:255;not null;"`
+	Age        string    `gorm:"size:2;not null;"json:"age,omitempty"`
+	CreatedAt  time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"created_at,omitempty"`
+	Collection []Music   `json:"collection,omitempty"`
 }
 
-func (s *Server) ValidateEmail(email string) error {
-	if email == "" {
-		return errors.New("required email")
-	}
-	if email != "" {
-		if err := checkmail.ValidateFormat(email); err != nil {
-			return errors.New("invalid email")
-		}
-	}
-	return nil
-}
+func (user *User) AddUser() (*User, error) {
+	conn := database.Connect()
+	defer conn.Close()
 
-func (s *Server) CreateUser(user *User) (*User, error) {
-	emailErr := s.ValidateEmail(user.Email)
-	if emailErr != nil {
-		return nil, emailErr
-	}
-	err := s.DB.Debug().Create(&user).Error
+	var err error
+	err = conn.Debug().Model(&User{}).Create(&user).Error
 	if err != nil {
-		return nil, err
+		return &User{}, err
 	}
-	return user, nil
-}
-
-func (s *Server) GetUserByEmail(email string) (*User, error) {
-	user := &User{}
-	err := s.DB.Debug().Where("email = ?", email).Take(&user).Error
-	if err != nil {
-		return nil, err
-	}
-	return user, nil
-}
-
-func (s *Server) GetPasswordByUsername(username string) (*User, error) {
-	user := &User{}
-	s.DB.Debug().Select("password").Where("username = ?", username).Find(&user)
 	return user, nil
 }
