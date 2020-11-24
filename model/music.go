@@ -3,23 +3,46 @@ package model
 import (
 	database "auth/db"
 	"encoding/json"
-	"github.com/jinzhu/gorm"
+	"fmt"
 	"log"
+	"auth/db"
 )
 
 type Music struct {
-	gorm.Model
-
-	ID     uint
+	ID     string
 	Name   string
 	Path   string
 	UserID uint
 }
 
-func (music *Music) SearchingAllSongs() ([]Music, error) {
+func GetCollectionFromUser(id string) ([]Music, error) {
 
-	conn := database.Connect()
-	defer conn.Close()
+	log.Println("Trying to recover collection ...")
+	var collection []Music
+	con := db.Connect()
+	query := fmt.Sprintf(`SELECT id, name, path, user_id from music WHERE user_id = %s`, id)
+	result, err := con.Query(query)
+	if err != nil {
+		log.Fatal(err)
+		return collection, err
+	}
+	defer result.Close()
+
+	for result.Next() {
+		var music Music
+		err := result.Scan(&music.ID, &music.Name, &music.Path, &music.UserID)
+
+		if err != nil {
+			log.Fatal(err)
+			return collection, err
+		} else {
+			collection = append(collection, music)
+		}
+	}
+	return collection, nil
+}
+
+func (music *Music) SearchingAllSongs() ([]Music, error) {
 
 	var musics []Music
 	reply, err := database.Get("music")
@@ -27,8 +50,7 @@ func (music *Music) SearchingAllSongs() ([]Music, error) {
 	if err != nil {
 		log.Println("Searching on mysql")
 		var err error
-		var musics []Music
-		err = conn.Debug().Model(&Music{}).Limit(100).Find(&musics).Error
+		musics, err := GetCollectionFromUser("1")
 		if err != nil {
 			return []Music{}, err
 		}

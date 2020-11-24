@@ -1,12 +1,6 @@
 package migration
 
-import (
-	"auth/db"
-	"auth/model"
-)
-
+//TODO: Implement migrations for user
 func AutoMigration() {
-	db := db.Connect()
-	defer db.Close()
-	db.AutoMigrate(model.Music{}, model.User{})
+	//db := db.Connect()
 }

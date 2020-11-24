@@ -1,6 +1,8 @@
 package handler
 
 import (
+	"auth/dto"
+	"auth/model"
 	"encoding/json"
 	"github.com/dgrijalva/jwt-go"
 	"net/http"
@@ -9,11 +11,6 @@ import (
 
 // Create the JWT Key used to create the signature
 var jwtKey = []byte("my_secret_key")
-
-var users = map[string]string{
-	"users1": "password1",
-	"users2": "password2",
-}
 
 // Create a struct to read the username and password from the request body
 type Credentials struct {
@@ -24,15 +21,15 @@ type Credentials struct {
 // Create a struct that will be encoded to a JWT
 // Add jwt.StandardClaims as an embedded type, to provide fields like expiry time
 type Claims struct {
-	Username string `json:"username"`
+	User model.User `json:"user"`
 	jwt.StandardClaims
 }
 
 // Signing handler
 func Signing(w http.ResponseWriter, r *http.Request) {
-	var creds Credentials
+	var cred Credentials
 	// Get the JSON body and decode into credentials
-	err := json.NewDecoder(r.Body).Decode(&creds)
+	err := json.NewDecoder(r.Body).Decode(&cred)
 	if err != nil {
 		// If the structure of the body is wrong, return an HTTP error
 		w.WriteHeader(http.StatusBadRequest)
@@ -40,23 +37,21 @@ func Signing(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Get the expected password from our user
-	//TODO: Implement database connection
-
-	expectedPassword, ok := users[creds.Username]
-
 	// If a password exists for the given user AND if it is same as the password we received,
 	// then we can move ahead. If NOT, then we return an "Unauthorized" status
-	if !ok || expectedPassword != creds.Password {
+	user, err := dto.Auth(cred.Username, cred.Password)
+	if err != nil {
 		w.WriteHeader(http.StatusUnauthorized)
 		return
 	}
+	user.Collection, _ = model.GetCollectionFromUser(user.ID)
 
 	// Declare the expiration time for the token
 	expirationTime := time.Now().Add(5 * time.Minute)
 
 	// Create the JWT Claims, which includes the username and expiry time
 	claims := &Claims{
-		Username: creds.Username,
+		User: user,
 		StandardClaims: jwt.StandardClaims{
 			// In JWT, the expiry time is expressed as unix milliseconds
 			ExpiresAt: expirationTime.Unix(),

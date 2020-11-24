@@ -1,31 +1,39 @@
 package model
 
 import (
-	database "auth/db"
-	"github.com/jinzhu/gorm"
+	"encoding/json"
 	"time"
 )
 
 type User struct {
-	gorm.Model
-
-	ID         uint      `gorm:"primary_key;auto_increment" json:"id,omitempty"`
-	Username   string    `gorm:"type:varchar(50);not null;unique"json:"username,omitempty"`
-	Email      string    `gorm:"size:50;not null;unique"json:"email,omitempty"`
-	Password   string    `gorm:"size:255;not null;"`
-	Age        string    `gorm:"size:2;not null;"json:"age,omitempty"`
-	CreatedAt  time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"created_at,omitempty"`
+	ID         string   `json:"id,omitempty"`
+	Username   string `json:"username,omitempty"`
+	Email      string `json:"email,omitempty"`
+	Password   string
+	Age        string    `json:"age,omitempty"`
+	CreatedAt  time.Time `son:"created_at,omitempty"`
 	Collection []Music   `json:"collection,omitempty"`
 }
-
-func (user *User) AddUser() (*User, error) {
-	conn := database.Connect()
-	defer conn.Close()
-
-	var err error
-	err = conn.Debug().Model(&User{}).Create(&user).Error
-	if err != nil {
-		return &User{}, err
+func NewUser(username, email, password, age string) User {
+	return User{
+		Username:   username,
+		Email:      email,
+		Password:   password,
+		Age:        age,
+		CreatedAt:  time.Now(),
 	}
-	return user, nil
+}
+
+
+func (user *User) toJson() ([]byte, error) {
+	userJson, err := json.Marshal(user)
+	if err != nil {
+		return nil, err
+	}
+	return userJson, nil
+}
+
+func (user *User) setPassword(newPass string) string {
+	user.Password = newPass
+	return user.Password
 }

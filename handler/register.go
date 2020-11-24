@@ -1,24 +1,25 @@
 package handler
 
 import (
+	"auth/dto"
 	"auth/model"
 	"net/http"
-	"time"
 )
 
 func Register(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" {
 
-		user := model.User{}
-		user.Username = r.FormValue("username")
-		user.Email = r.FormValue("email")
-		user.Password = r.FormValue("password")
-		user.Age = r.FormValue("age")
-		user.CreatedAt = time.Now()
-		user.Collection = []model.Music{}
+		name := r.FormValue("username")
+		email := r.FormValue("email")
+		password := r.FormValue("password")
+		age := r.FormValue("age")
 
-		_, err := user.AddUser()
-		if err != nil {
+		user := model.NewUser(name, email, password, age)
+
+		//_, err := dto.CreateUser(user)
+		sla := dto.CreateUser(user)
+		//if err != nil {
+		if sla == true {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}

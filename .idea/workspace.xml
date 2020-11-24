@@ -20,15 +20,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cbc74e1b-12a5-4bf0-a537-4b4a2aeb13c4" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/docker/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler/refresh.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/refresh.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/mysql.go" beforeDir="false" afterPath="$PROJECT_DIR$/db/mysql.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker/config/nginx.conf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker/mimuse.Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker/nginx.Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/handler/register.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/register.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/handler/signing.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/signing.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/handler/welcome.go" beforeDir="false" afterPath="$PROJECT_DIR$/handler/welcome.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/base_model.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/user.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/migration/migration.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/migration/migration.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/music.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/music.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/model/user.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,9 +50,12 @@
       </list>
     </option>
   </component>
-  <component name="GOROOT" path="/snap/go/6727" />
+  <component name="GOROOT" path="/snap/go/6715" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GoLibraries">
+    <option name="indexEntireGoPath" value="false" />
   </component>
   <component name="ProjectId" id="1kaEHBfKZq0cc4dxOc4FfyZkz59" />
   <component name="ProjectLevelVcsManager">
@@ -61,9 +71,18 @@
     <property name="DefaultGoTemplateProperty" value="Go File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="configurable.Global.GOPATH.is.expanded" value="true" />
+    <property name="configurable.Module.GOPATH.is.expanded" value="false" />
+    <property name="configurable.Project.GOPATH.is.expanded" value="true" />
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
     <property name="last_opened_file_path" value="$USER_HOME$" />
+    <property name="settings.editor.selected.configurable" value="go.vgo" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -89,6 +108,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
@@ -98,5 +118,17 @@
       <screen x="0" y="27" width="1366" height="701" />
     </state>
     <state x="478" y="214" width="400" height="334" key="#Go_Modules/0.27.1366.701@0.27.1366.701" timestamp="1605930283796" />
+    <state x="416" y="126" width="524" height="509" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1606161510521">
+      <screen x="0" y="27" width="2732" height="701" />
+    </state>
+    <state x="416" y="126" width="524" height="509" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.27.2732.701@0.27.2732.701" timestamp="1606161510521" />
+    <state x="172" y="27" width="1012" height="701" key="SettingsEditor" timestamp="1606171932173">
+      <screen x="0" y="27" width="1366" height="701" />
+    </state>
+    <state x="172" y="27" width="1012" height="701" key="SettingsEditor/0.27.1366.701/1366.0.1366.768@0.27.1366.701" timestamp="1606171932173" />
+    <state x="0" y="27" width="618" height="701" key="find.popup" timestamp="1606188076468">
+      <screen x="0" y="27" width="1366" height="701" />
+    </state>
+    <state x="0" y="27" width="618" height="701" key="find.popup/0.27.1366.701/1366.0.1366.768@0.27.1366.701" timestamp="1606188076468" />
   </component>
 </project>
